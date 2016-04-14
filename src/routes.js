@@ -6,11 +6,11 @@ export default (
 	<Route component={ require('./pages/root') }>
 		{ GenerateRoute({
 			paths: ['/', '/home'],
-			component: require('/pages/Home')
+			component: require('./pages/home')
 		}) }
 		{ GenerateRoute({
 			paths: ['/account'],
-			component: require('/pages/Account')
+			component: require('./pages/account')
 		}) }
 	</Route>
 );
