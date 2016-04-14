@@ -4,7 +4,7 @@
   "description": "Pinterest Clone built on (React, Flux (Alt) & Webpack boilerplate)",
   "scripts": {
     "dev": "node server.js",
-    "prod": "npm install && npm run build && NODE_ENV=production node server.js",
+    "prod": "npm run build && NODE_ENV=production node server.js",
     "lint": "eslint src",
     "build": "rm -rf build/* && NODE_ENV=production webpack -p --config webpack.production.config.js",
     "postinstall": "npm run prod"
