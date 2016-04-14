@@ -3,11 +3,23 @@ const app = express();
 const path = require('path');
 const httpProxy = require('http-proxy');
 
+const bodyparser = require("body-parser");
+const cookieparser = require("cookie-parser");
+
+const mongoose = require("mongoose");
+mongoose.connect("mongodb://admin:moonstarmagicaardvark@ds019698.mlab.com:19698/pinterest");
+
+var User = require("./src/models/User.js");
+var Pin = require("./src/models/Pin.js");
+
 const isProduction = process.env.NODE_ENV === 'production';
 const port = isProduction ? process.env.PORT || 4000 : 3000;
 const publicPath = isProduction ? path.resolve(__dirname, 'build') : path.resolve(__dirname, 'src');
 
 app.set("view options", {layout: false});
+app.use(bodyparser.json());
+app.use(bodyparser.urlencoded({extended: true}));
+app.use(cookieparser());
 app.use(express.static(publicPath));
 
 // We only want to run the workflow when not in production
@@ -79,8 +91,138 @@ if (!isProduction) {
     });
 }
 
-app.all('*', function (req, res) {
+app.all('/', function (req, res) {
     res.sendFile(`${publicPath}/index.html`);
+});
+
+app.post("/login", function(req, res) {
+    var un = req.body.username;
+    var pw = req.body.password;
+
+
+    /*
+     * response: 1 = success
+     * response: 2 = wrong password
+     * response: 3 = username not found
+     * */
+
+
+    User.findOne({
+        username: un
+    }, function(err, doc) {
+        if(err) throw err;
+        if(doc) {
+            if (doc.password === pw) {
+                res.json({response: 1});
+            } else {
+                res.json({response: 2});
+            }
+        } else {
+            res.json({response: 3});
+        }
+    });
+});
+
+app.post("/signup", function(req, res) {
+    var un = req.body.username;
+    var pw = req.body.password;
+
+    /*
+     * response: 1 = user signed up
+     * response: 2 = this account name already used
+     */
+
+    User.findOne({
+        username: un
+    }, function(err, doc) {
+        if(err) throw err;
+        if(doc) {
+            res.json({response: 2});
+        } else {
+            var user = new User({
+                username: un,
+                password: pw,
+                pins: []
+            });
+            console.log(user);
+            user.save();
+            res.json({response: 1});
+        }
+    })
+});
+
+app.get("/logout", function(req, res) {
+
+});
+
+app.get("/recent", function(req, res) {
+    Pin.find({}).sort({date: -1}).limit(10).exec(function(err, doc) {
+        if(err) throw err;
+        res.json(doc);
+    })
+});
+
+app.get("/user/:username", function(req, res) {
+    var pins = [];
+    User.findOne({
+        username: req.params.username
+    }).sort({date: -1}).exec(function (err, doc) {
+        if (err) throw err;
+        doc.pins.map(function (val) {
+            Pin.findOne({
+                _id: val
+            }, function (err, doc2) {
+                if (err) throw err;
+                pins.push(doc2);
+                if (pins.length === doc.pins.length) {
+                    res.json(pins);
+                }
+            });
+        });
+    });
+});
+
+
+
+
+app.post("/user/:username/new", function(req, res) {
+    var un = req.params.username;
+    var src = req.body.src;
+    var title = req.body.title;
+
+    /*
+     * response: 1 = added pin
+     * response: 2 = pin already exists for user
+     */
+    Pin.findOne({
+        author: un,
+        src: src
+    }, function(err, doc2) {
+        if(err) throw err;
+        if(doc2) {
+            res.json({response: 2});
+        } else {
+            var pin = new Pin({
+                title: title,
+                author: un,
+                src: src
+            });
+
+            pin.save(function(err, p) {
+                if(err) throw err;
+                User.update({
+                    username: un
+                }, {
+                    $push: {
+                        pins: p._id
+                    }
+                }, function(err, doc) {
+                    if(err) throw err;
+                });
+            });
+            res.json({response: 1});
+        }
+    })
 });
 
 app.listen(port, function () {

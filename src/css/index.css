@@ -1,0 +1,265 @@
+html, body {
+    margin: 0;
+    padding: 0;
+    background-color: #F5F3F3;
+}
+
+.app {
+    position: relative;
+    min-height: 100vh;
+}
+
+.header {
+    margin: 0 auto;
+    padding: 10px 5px;
+    border-bottom: 1px solid rgba(181, 181, 181, .5);
+    background-color: #fff;
+    overflow: visible;
+}
+
+.header h1, .header ul {
+    display: inline-block;
+    vertical-align: middle;
+}
+
+.header h1 {
+    text-align: center;
+    width: 50%;
+    color: #BD081C;
+}
+
+.header h1 .subtitle {
+    font-size: 12px;
+    font-style: italic;
+    color: black;
+}
+
+@media (max-width: 500px) {
+    .header h1 .subtitle {
+        display: block;
+    }
+}
+
+.header ul {
+    width: 50%;
+    padding: 0;
+    list-style-type: none;
+}
+
+.header ul li {
+    display: inline-block;
+}
+
+.float-right {
+    float: right;
+}
+
+.link {
+    width: 128px;
+    font-size: 14px;
+    font-weight: bold;
+    line-height: 36px;
+    margin-left: 5px;
+    margin-right: 5px;
+    border-radius: 5px;
+    border: #fff;
+}
+
+@media (max-width: 561px) {
+    .link {
+        max-width: 100px;
+        font-size: 12px;
+    }
+}
+
+.link:hover {
+    cursor: pointer;
+}
+
+.link#signup {
+    background: #BD081C;
+    color: #ffffff;
+}
+
+.link#signup:hover{
+    background: #D50C22;
+}
+
+.link#login, .link#logout {
+    color: #000;
+    background: #EBEBEB;
+}
+
+.link#login:hover, .link#logout:hover {
+    background: #F5F3F3;
+}
+
+.modals {
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-color: rgba(0, 0, 0, .5);
+}
+
+.modal {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    padding: 15px;
+    background-color: #F5F3F3;
+    border-radius: 6px;
+    min-height: 270px;
+}
+
+.modal-close {
+    position: absolute;
+    top: 0;
+    right: 0;
+    border-radius: 50%;
+    transform: translate(50%, -50%);
+    border: none;
+    font-size: 20px;
+    background-color: #B0AEAE;
+}
+
+.modal-close:hover, .modal-close:active {
+    background-color: #DCDADA;
+    color: #000;
+    cursor: pointer;
+}
+
+.modal h4 {
+    margin: 15px auto;
+    text-align: center;
+    font-size: 36px;
+
+}
+
+.modal .form-input {
+    display: block;
+    font-size: 20px;
+    margin: 10px auto;
+    padding: 10px;
+}
+
+.modal .form-submit {
+    border-radius: 6px;
+    background-color: #BD081C;
+    color: #fff;
+    width: 128px;
+    border: none;
+}
+
+.modal .form-submit:hover {
+    background-color: #D50C22;
+}
+
+.main {
+    padding: 5px;
+}
+
+.main h2 {
+    font-size: 46px;
+    font-style: italic;
+    text-align: center;
+    margin-top: 15px;
+}
+
+
+.main .user-bar {
+    text-align: center;
+}
+
+.main .user-bar .bar-button {
+    font-size: 40px;
+    border: none;
+    border-radius: 5px;
+    background-color: #BD081C;
+    color: #fff;
+    margin: 15px;
+    padding: 10px;
+}
+
+.main .user-bar .bar-button:hover, .main .user-bar .bar-button:active {
+    background-color: #D50C22;
+    cursor: pointer;
+}
+
+.main .new-pin {
+    text-align: center;
+}
+
+.main .new-pin .form-input {
+    font-size: 20px;
+}
+
+.main .new-pin .form-submit {
+    font-size: 20px;
+    border: none;
+    border-radius: 5px;
+    background-color: #BD081C;
+    color: #fff;
+    min-width: 128px;
+}
+
+.main .new-pin .form-submit:hover, .main .new-pin .form-submit:active {
+    background-color: #D50C22;
+    cursor: pointer;
+}
+
+.pin-collection {
+    margin: 20px auto;
+    text-align: center;
+}
+
+.pin-collection .pin {
+    width: 280px;
+    display: inline-block;
+    background-color: #FDFDFD;
+    margin: 5px;
+    border: 1px solid rgba(181, 181, 181, .5);
+    border-radius: 6px;
+    min-height: 366px;
+    vertical-align: middle;
+}
+
+.pin-collection .pin .pin-img {
+    width: 260px;
+    margin: 10px;
+    height: 260px;
+}
+
+.pin-collection .pin .pin-title {
+    margin: 10px;
+    font-size: 20px;
+    text-decoration: underline;
+    text-align: center;
+}
+
+.pin-collection .pin .pin-author {
+    margin: 10px auto;
+    display: block;
+    font-size: 18px;
+    background-color: #BD081C;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    padding: 4px 20px;
+    min-width: 100px;
+}
+
+.pin-collection .pin .pin-author:hover {
+    background-color: #D50C22;
+    cursor: pointer;
+}
+
+.footer {
+    position: static;
+    font-size: 10px;
+    font-style: italic;
+    bottom: 0;
+    text-align: center;
+}
